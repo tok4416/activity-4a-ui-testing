@@ -7,6 +7,9 @@ import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.List;
 
@@ -24,6 +27,7 @@ public class RitRatingsTest extends AbstractWebTest {
 
   private RitHomePage homePage;
   private RatingInfoView firstRatingInfo;
+  private RatingInfoView secondRatingInfo;
 
   //
   // Test sequence
@@ -47,7 +51,7 @@ public class RitRatingsTest extends AbstractWebTest {
     final List<RatingInfoView> ratingInfoViews = homePage.getRatingViews();
     assertEquals(6, ratingInfoViews.size(), "Number of views should be 6");
     // prepare for next test
-    firstRatingInfo = ratingInfoViews.getFirst();
+    firstRatingInfo = ratingInfoViews.get(1); // getting second rating info view
   }
 
   /**
@@ -57,7 +61,7 @@ public class RitRatingsTest extends AbstractWebTest {
   @Order(3)
   public void inspectFirstRatingInfo() {
     assertAll("group assertions"
-      , () -> assertEquals("5th", firstRatingInfo.getRating())
+      , () -> assertEquals("6th", firstRatingInfo.getRating())
       , () -> assertEquals("Among Top Schools for Co-op or Internship Programs", firstRatingInfo.getTitle())
     );
   }
