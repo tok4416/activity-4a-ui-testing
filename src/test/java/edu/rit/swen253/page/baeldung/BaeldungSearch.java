@@ -15,7 +15,7 @@ public class BaeldungSearch extends AbstractPage {
     private static final By SEARCH_NAVIGATION_FINDER = By.id("menu-item-40489");
     private static final By POPUP_CLOSE_FINDER = By.className("qc-usp-close-icon");
     private static final By SEARCH_TEXT_FIELD_FINDER = By.id("search");
-    private static final By SEARCH_ENTRY_BUTTON_FINDER = By.className("btn btn-search-icon");
+    private static final By SEARCH_ENTRY_BUTTON_FINDER = By.className("btn-search-icon");
 
     private DomElement searchIcon;
     private DomElement searchTextBar;
@@ -42,14 +42,21 @@ public class BaeldungSearch extends AbstractPage {
 
     public void enterSearchText(String text) {
         try {
-
+            searchTextBar = findOnPage(SEARCH_TEXT_FIELD_FINDER);
+            searchTextBar.click();
+            searchTextBar.enterText(text);
         } catch (TimeoutException e) {
-            fail("");
+            fail("Search textbar element not found");
         }
     }
 
     public void submitSearch() {
-
+        try {
+            searchSubmissionButton = findOnPage(SEARCH_ENTRY_BUTTON_FINDER);
+            searchSubmissionButton.click();
+        } catch (TimeoutException e) {
+            fail("Search submission button element not found");
+        }
     }
 
 }

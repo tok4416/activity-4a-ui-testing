@@ -24,5 +24,6 @@ public class BaeldungSearchTest extends AbstractWebTest {
     @Order(2)
     public void enterSearch() {
         home.enterSearchText("java");
+        home.submitSearch();
     }
 }
