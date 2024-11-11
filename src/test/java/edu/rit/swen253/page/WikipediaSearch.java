@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -28,6 +29,8 @@ public class WikipediaSearch extends AbstractPage {
     private static final By SEARCH_BUTTON = By.id("searchButton");
     private static final By SEARCH_RESULTS = By.cssSelector(".mw-search-result-heading a");
     
+    private static final Logger logger = Logger.getLogger(WikipediaSearch.class.getName());
+
     public WikipediaSearch(){ 
         super();
     }
@@ -102,21 +105,25 @@ public class WikipediaSearch extends AbstractPage {
         }
     } catch (StaleElementReferenceException e) {
         System.out.println("StaleElementReference Exception has been encountered");
-        return listSearchResults(); 
+        return results; 
     }
         return results;
     }
 
     public void clickFirstResult() {
         try {
-            List<WebElement> searchResults = SeleniumUtils.getDriver().findElements(RESULT_LINKS);
             
-            if (searchResults.isEmpty()) {
-                return;
+            TimingUtils.sleep(3); // Wait for things to load
+    
+            WebElement suggestionHighlight = SeleniumUtils.getDriver().findElement(By.cssSelector(".suggestion-highlight"));
+    
+            if (suggestionHighlight != null && suggestionHighlight.isDisplayed()) {
+                suggestionHighlight.click();
+                logger.info("Clicked on the suggestion: Antoine");
+            } else {
+                logger.severe("Suggestion highlight has not been loaded yet");
             }
-            WebElement firstResult = searchResults.get(0);
-            System.out.println("Clickedfirst search result: " + firstResult.getText());
-            firstResult.click();
+
 
         } catch (TimeoutException e) {
             System.out.println("Timeout Exception has occurred");
