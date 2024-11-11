@@ -43,10 +43,8 @@ public class ytSearchResultsPage extends AbstractPage {
       DomElement indexResultLink;
       try {
 
-        indexResultLink = indexResult.findChildBy(By.cssSelector("a"));
-        final String link = indexResultLink.getAttribute("href");
-        indexResultLink.click();
-        return link;
+        indexResultLink = indexResult.findChildBy(By.id("video-title"));
+        return indexResultLink.getAttribute("title");
 
       } catch (TimeoutException e) {
         fail("Link for indexed result not found");
