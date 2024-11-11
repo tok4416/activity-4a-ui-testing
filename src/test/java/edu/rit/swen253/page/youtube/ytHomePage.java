@@ -18,37 +18,40 @@ import static org.junit.jupiter.api.Assertions.fail;
  * @author <a href='mailto:mot7506@g.rit.edu'>Miles Tallia</a>
  */
 public class ytHomePage extends AbstractPage {
-  private static final Logger logger = Logger.getLogger(ytHomePage.class.getName());
 
   /**
    * A finder to extract the main body content.
    * WARN: this is fragile code
    */
-  private static final By MAIN_CONTENT_FINDER = By.cssSelector("ytd--app > div.content");
+  private static final By SEARCH_CONTAINER_FINDER =  By.id("search");
 
-  private DomElement mainContentPanel;
+  private DomElement searchBox;
 
   public ytHomePage() {
     super();
     // validate basic page structure
     try {
-      mainContentPanel = findOnPage(MAIN_CONTENT_FINDER);
+      searchBox = findOnPage(SEARCH_CONTAINER_FINDER);
     } catch (TimeoutException e) {
-      fail("Main content panel not found");
+      fail("Search box element not found");
     }
   }
 
-  public List<RitAreaOfStudyLink> getStudyLinks() {
-    // the Ratings panel is in the fifth <div> of the main content
-    // WARN: this is fragile code
-    return mainContentPanel.findChildBy(By.xpath("div[7]"))
-      // the statistics columns are organized in an unordered list embedded in a layout div
-      .findChildBy(By.cssSelector("div.row ul"))
-      // extract each statistics columns
-      .findChildrenBy(By.cssSelector("li > div.card"))
-      .stream()
-      // build a Rating Info view object for each of these divs
-      .map(RitAreaOfStudyLink::new)
-      .toList();
+  public void youtubeSearch(String input) {
+    
+    try {
+      DomElement searchField = searchBox.findChildBy(By.id("search"));
+      searchField.click();
+      searchField.enterText(input);
+    } catch (TimeoutException e) {
+      fail("Search text entry element not found");
+    }
+
+    try {
+      DomElement searchButton = searchBox.findChildBy(By.id("search-icon-legacy"));
+      searchButton.click();
+    } catch (TimeoutException e) {
+      fail("Search button element not found");
+    }
   }
 }
