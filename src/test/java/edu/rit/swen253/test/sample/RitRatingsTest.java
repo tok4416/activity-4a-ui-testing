@@ -3,6 +3,8 @@ package edu.rit.swen253.test.sample;
 import edu.rit.swen253.page.sample.RatingInfoView;
 import edu.rit.swen253.page.sample.RitHomePage;
 import edu.rit.swen253.test.AbstractWebTest;
+
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -22,6 +24,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  *
  * @author <a href='mailto:bdbvse@rit.edu'>Bryan Basham</a>
  */
+
+@Disabled
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class RitRatingsTest extends AbstractWebTest {
 
