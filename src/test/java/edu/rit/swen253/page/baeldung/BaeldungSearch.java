@@ -4,10 +4,6 @@ import org.openqa.selenium.TimeoutException;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.openqa.selenium.By;
 
 import edu.rit.swen253.page.AbstractPage;
@@ -20,7 +16,6 @@ public class BaeldungSearch extends AbstractPage {
     private static final By POPUP_CLOSE_FINDER = By.className("qc-usp-close-icon");
     private static final By SEARCH_TEXT_FIELD_FINDER = By.id("search");
     private static final By SEARCH_ENTRY_BUTTON_FINDER = By.className("btn-search-icon");
-    private static final By SEARCH_RESULT_CONTAINER_FINDER = By.className("archive-columns");
 
     // storing the search icon that will be initialized in the constructor to allow other methods to use it for navigation
     private DomElement searchIcon;
@@ -40,10 +35,18 @@ public class BaeldungSearch extends AbstractPage {
         }
     }
 
+    /**
+     * This method clicks the search icon on the baeldung page to open the page that allows for the entry of search terms and submission of those terms 
+     */
     public void goToSearchPage() {
         searchIcon.click(); // clicking the icon opens the search view (it does not change the current URL)
     }
 
+    /**
+     * This method allows for the entry of text into the page's search bar
+     * 
+     * @param text The text that will be entered into the search bar
+     */
     public void enterSearchText(String text) {
         try {
             DomElement searchTextBar = findOnPage(SEARCH_TEXT_FIELD_FINDER);
@@ -55,6 +58,9 @@ public class BaeldungSearch extends AbstractPage {
         }
     }
 
+    /**
+     * This method submits the search terms that have been entered. This should be invoked AFTER enterSearchText is called, otherwise a search with no text will be performed
+     */
     public void submitSearch() {
         try {
             // finding the search button & clicking it to submit our search terms
