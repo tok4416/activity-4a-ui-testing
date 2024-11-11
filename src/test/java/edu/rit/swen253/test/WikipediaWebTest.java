@@ -9,11 +9,6 @@ import edu.rit.swen253.utils.TimingUtils;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -45,8 +40,6 @@ public class WikipediaWebTest extends AbstractWebTest{
      * This tests searches in the search bar. In this case we are testing search is for Antoine
      * Also shows results of the search of Antoine (Can be any other search)
      */
-
-
     @Test
     @Order(2)
     public void searchTest(){
