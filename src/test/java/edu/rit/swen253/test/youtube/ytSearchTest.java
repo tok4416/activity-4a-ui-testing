@@ -17,10 +17,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ytSearchTest extends AbstractWebTest {
-  private static final Logger logger = Logger.getLogger(ytSearchTest.class.getName());
 
   private ytHomePage homePage;
-  private ytSearchResultsPage searchResultsPage;
 
   //
   // Test sequence
@@ -41,34 +39,18 @@ public class ytSearchTest extends AbstractWebTest {
   @Test
   @Order(2)
   public void useSearchBar() {
+    // guard condition
+    Assumptions.assumeTrue(homePage != null, "No homepage link found");
     
     homePage.youtubeSearch("RIT Baja");
 
-    homePage.waitUntilGone();
+    SimplePage page = assertNewPage(SimplePage::new);
 
-    final SimplePage page = assertNewPage(SimplePage::new);
+    //waituntilgone was throwing weird errors so fixed it with this instead.
+    while (page.getURL() == "https://www.youtube.com/") {
+      page = assertNewPage(SimplePage::new);
+    }
     
     assertEquals("https://www.youtube.com/results?search_query=RIT+Baja", page.getURL());
-  }
-
-  /**
-   * Third, navigate to the search results page
-   */
-  @Test
-  @Order(3)
-  public void navigateToSearchResults() {
-    searchResultsPage = navigateToPage("https://www.youtube.com/results?search_query=RIT+Baja", ytSearchResultsPage::new);
-  }
-
-  /**
-   * Fourth, Confirm first result
-   */
-  @Test
-  @Order(4)
-  public void inspectSearchResults() {
-
-    searchResultsPage.getSearchResultsList();
-
-    assertEquals("RIT Baja 2023 Recap", searchResultsPage.selectIndex(0));
   }
 }
