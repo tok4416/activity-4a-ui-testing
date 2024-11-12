@@ -46,8 +46,8 @@ public class ytSearchTest extends AbstractWebTest {
 
     SimplePage page = assertNewPage(SimplePage::new);
 
-    //waituntilgone was throwing weird errors so fixed it with this instead.
-    while (page.getURL() == "https://www.youtube.com/") {
+    //waituntilgone was throwing weird errors so fixed it with this
+    while (page.getURL() == "https://www.youtube.com/" || page.getURL() == "https://www.youtube.com/?themeRefresh=1/" ) {
       page = assertNewPage(SimplePage::new);
     }
     
